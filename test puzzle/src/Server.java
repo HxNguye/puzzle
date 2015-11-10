@@ -41,7 +41,7 @@ public class Server implements Runnable
 				}
 				throw new RuntimeException("Error accepting client connection", e);
 			}
-			new Thread(new Worker(clientSocket, "Multithreaded Server", ++Threadcount)).start();
+			new Thread(new ConnectionHandler(clientSocket, "Multithreaded Server", ++Threadcount)).start();
 		}
 		System.out.println("Server Stopped.") ;
 	}

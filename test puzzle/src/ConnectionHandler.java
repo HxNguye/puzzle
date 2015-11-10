@@ -10,13 +10,13 @@ import java.net.Socket;
 /**
 
  */
-public class Worker implements Runnable{
+public class ConnectionHandler implements Runnable{
 
     protected Socket clientSocket = null;
     protected String serverText   = null;
     private int count = 0;
 
-    public Worker(Socket clientSocket, String serverText, int count) {
+    public ConnectionHandler(Socket clientSocket, String serverText, int count) {
         this.clientSocket = clientSocket;
         this.serverText   = serverText;
         this.count = count;
