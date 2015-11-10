@@ -28,7 +28,11 @@ public class ConnectionHandler implements Runnable{
             PrintWriter output= new PrintWriter( clientSocket.getOutputStream(), true );
             long time = System.currentTimeMillis();
             String temp = input.readLine();
-            output.println("Thread" + this.count + " responded");
+            output.println("Thread for player #" + this.count + " responded");
+            
+            // Implement some Puzzle handler here (new PuzzleHandler etc)
+            // WIP
+            
             output.close();
             input.close();
             System.out.println("Request processed: " + time);
