@@ -3,7 +3,6 @@ package server;
 public class PuzzleObject {
 	String fileName;
 	String clue;
-	int stageNumber;
 	String type;
 	String answer;
 	
@@ -11,28 +10,24 @@ public class PuzzleObject {
 		
 	}
 	
-	PuzzleObject(String file, String answer, String clue, String type, int stage){
+	PuzzleObject(String file, String answer, String clue, String type){
 		fileName = file;
 		this.clue = clue;
-		stageNumber = stage;
 		this.type = type;
 		this.answer = answer;
 	}
 	
-	public String getFileName(){
-		return fileName;
+	public Boolean getFileName(String compare){
+		return fileName.equals(compare);
 	}
-	public String getClue(){
-		return clue;
+	public Boolean getClue(String compare){
+		return clue.equals(compare);
 	}
-	public String getType(){
-		return type;
+	public Boolean getType(String compare){
+		return type.equals(compare);
 	}
-	public String getAnswer(){
-		return answer;
-	}
-	public int getStageNubmer(){
-		return stageNumber;
+	public Boolean getAnswer(String compare){
+		return answer.equals(compare);
 	}
 	
 	public void setFileName(String file){
@@ -46,8 +41,5 @@ public class PuzzleObject {
 	}
 	public void setAnswer(String answer){
 		this.answer = answer;
-	}
-	public void setStageNubmer(int stageNumber){
-		this.stageNumber = stageNumber;
 	}
 }

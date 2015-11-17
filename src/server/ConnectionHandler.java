@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -18,7 +19,7 @@ public class ConnectionHandler implements Runnable{
     protected String serverText   = null;
     private int count = 0;
 
-    public ConnectionHandler(Socket clientSocket, String serverText, int count) {
+    public ConnectionHandler(Socket clientSocket, String serverText, int count, ArrayList<PuzzleObject> puzzles) {
         this.clientSocket = clientSocket;
         this.serverText   = serverText;
         this.count = count;

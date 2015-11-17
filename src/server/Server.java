@@ -2,7 +2,9 @@ package server;
 
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -14,10 +16,17 @@ public class Server implements Runnable
 	protected boolean      isStopped    = false;
 	protected Thread       runningThread= null;
 	private int Threadcount = 0;
+	public static ArrayList<PuzzleObject> puzzle;
 
 	public Server(int port)
 	{
 		this.serverPort = port;
+		puzzle = new ArrayList<PuzzleObject>();
+		try {
+			loadPuzzle();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void run()
@@ -42,7 +51,7 @@ public class Server implements Runnable
 				}
 				throw new RuntimeException("Error accepting client connection", e);
 			}
-			new Thread(new ConnectionHandler(clientSocket, "Multithreaded Server", ++Threadcount)).start();
+			new Thread(new ConnectionHandler(clientSocket, "Multithreaded Server", ++Threadcount, puzzle)).start();
 		}
 		System.out.println("Server Stopped.") ;
 	}
@@ -76,6 +85,17 @@ public class Server implements Runnable
 		{
 			throw new RuntimeException("Cannot open port 8080", e);
 		}
+	}
+	
+	private void loadPuzzle() throws IOException{
+		BufferedReader inFile= new BufferedReader(new FileReader("puzzle.txt"));
+		String line = inFile.readLine();
+		while(line != null){
+			String[] args = line.split(",");
+			puzzle.add(new PuzzleObject(args[0], args[1], args[2], args[3]));
+			line  = inFile.readLine();
+		}
+		inFile.close();
 	}
 
 	public static void main(String[] args) throws Exception
