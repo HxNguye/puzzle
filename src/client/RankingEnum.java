@@ -1,6 +1,9 @@
 package client;
 
 
+/**
+ * Enum class for the ranking system
+ */
 public enum RankingEnum 
 {
 	S("Impressive"), 
