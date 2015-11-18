@@ -59,7 +59,7 @@ public class TimerUtil
 	}
 
 	/**
-//	 * @deprecated
+	 * @deprecated
 	 * Main function to test
 	 */
 	public static void main(String[] args) 
