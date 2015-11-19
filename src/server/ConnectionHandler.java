@@ -40,7 +40,7 @@ public class ConnectionHandler implements Runnable{
 			// Implement some Puzzle handler here (new PuzzleHandler etc)
 			// WIP
 			while(true){
-				int stage = getStage(input.readLine());
+				stage = getStage(input.readLine());
 				if (stage == -1){
 					output.writeUTF("That was not a valid entry");
 					output.writeUTF("\nEnter \"new\" if you are a new player or "
@@ -50,12 +50,15 @@ public class ConnectionHandler implements Runnable{
 				else break;
 			}
 			puzzle = puzzles.get(stage);
+			//send initial puzzle
 			sendPuzzle(output);
+			//handle the rest of the puzzles and then close the connection
 			handlePuzzles(input, output);
 
 			output.close();
 			input.close();
 			System.out.println("Request processed: " + time);
+			clientSocket.close();
 		} catch (IOException e) {
 			//report exception somewhere.
 			e.printStackTrace();
@@ -64,10 +67,12 @@ public class ConnectionHandler implements Runnable{
 
 	public int getStage(String in){
 		if(in.equals("new"))return 0;
-
+		
+		//checks for the puzzle with the matching answer
 		else {
 			for(int i = 0; i < puzzles.size(); i++){
-				if(in.equals(puzzles.get(i).answer)) return i;
+				//if the puzzle exists send return the number of the next stage
+				if(in.equals(puzzles.get(i).answer)) return i+1;
 			}
 		}
 		return -1;
@@ -79,8 +84,12 @@ public class ConnectionHandler implements Runnable{
 		while (!line.equals("exit")){
 			//if the client send a correct answer
 			if (puzzle.getAnswer(line)){
+				if (++stage == puzzles.size()){
+					output.writeUTF("You Win!");
+					break;
+				}
 				//send a snarky message here
-				puzzle = puzzles.get(++stage);
+				puzzle = puzzles.get(stage);
 				sendPuzzle(output);
 			}
 			else if(line.equals("clue")){
@@ -108,10 +117,4 @@ public class ConnectionHandler implements Runnable{
 			file.close();
 		}
 	}
-
-//	public void clueSend(Socket connection) throws IOException{
-//		PrintWriter output = new PrintWriter(connection.getOutputStream(), true);
-//		output.write(puzzle.clue);
-//		output.close();
-//	}
 }
