@@ -1,24 +1,24 @@
 package server;
 
 public class PuzzleObject {
-	String fileName;
-	String clue;
-	String type;
-	String answer;
+	public String content;
+	public String clue;
+	public String type;
+	public String answer;
 	
 	PuzzleObject(){
 		
 	}
 	
 	PuzzleObject(String file, String answer, String clue, String type){
-		fileName = file;
+		content = file;
 		this.clue = clue;
 		this.type = type;
 		this.answer = answer;
 	}
 	
-	public Boolean getFileName(String compare){
-		return fileName.equals(compare);
+	public Boolean getcontent(String compare){
+		return content.equals(compare);
 	}
 	public Boolean getClue(String compare){
 		return clue.equals(compare);
@@ -30,8 +30,8 @@ public class PuzzleObject {
 		return answer.equals(compare);
 	}
 	
-	public void setFileName(String file){
-		fileName = file;
+	public void setcontent(String file){
+		content = file;
 	}
 	public void setClue(String clue){
 		this.clue = clue;
