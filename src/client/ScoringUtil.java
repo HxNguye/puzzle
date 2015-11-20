@@ -54,27 +54,27 @@ public class ScoringUtil
 	 */
 	public RankingEnum upgradeRanking()
 	{
-		if (playerScore >= 50000)
+		if (playerScore >= 50)
 		{
 			setRanking(RankingEnum.S);
 		}	
-		else if(playerScore >= 40000)
+		else if(playerScore >= 40)
 		{
 			setRanking(RankingEnum.A);
 		}
-		else if(playerScore >= 30000)
+		else if(playerScore >= 30)
 		{
 			setRanking(RankingEnum.B);
 		}
-		else if(playerScore >= 20000)
+		else if(playerScore >= 20)
 		{
 			setRanking(RankingEnum.C);
 		}
-		else if(playerScore >= 10000)
+		else if(playerScore >= 10)
 		{
 			setRanking(RankingEnum.D);
 		}
-		else //(playerScore > 10000)
+		else //(playerScore > 10)
 		{
 			setRanking(RankingEnum.F);
 		}
