@@ -1,6 +1,5 @@
 package client;
 
-import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -9,30 +8,26 @@ import java.util.TimerTask;
  */
 public class TimerUtil
 {
-	static int interval;
-	static Timer timer;
+	int interval;
+	Timer timer;
 	
 	/**
 	 * EMPTY CONSTRUCTOR
 	 */
-	TimerUtil()
-	{
-		
-	}
+	TimerUtil(){}
 	
 	/**
 	 * Counddown timer method that decrements by 1 second
+	 * @param String secs - Number of seconds to start the Countdown
 	 */
-	public static void CountdownTimer() 
+	public void CountdownTimer(String secs) 
 	{
-		Scanner sc = new Scanner(System.in);
 		System.out.print("Input seconds => : ");
-		String secs = sc.nextLine();
 		int delay = 1000;
 		int period = 1000;
 		timer = new Timer();
 		interval = Integer.parseInt(secs);
-		System.out.println(secs);
+		System.out.println(interval);
 		timer.scheduleAtFixedRate(new TimerTask() 
 		{
 
@@ -42,14 +37,12 @@ public class TimerUtil
 
 			}
 		}, delay, period);
-		sc.close();
 	}
 
 	/**
-	 * @deprecated
-	 * Helper method for testing
+	 * Helper method set intervals of 1 seconds
 	 */
-	private static final int setInterval() 
+	private final int setInterval() 
 	{
 		if (interval == 1)
 		{
@@ -58,13 +51,4 @@ public class TimerUtil
 		return --interval;
 	}
 
-	/**
-	 * @deprecated
-	 * Main function to test
-	 */
-	public static void main(String[] args) 
-	{
-		TimerUtil t = new TimerUtil();
-		t.CountdownTimer();
-	}
 }
