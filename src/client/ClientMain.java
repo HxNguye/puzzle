@@ -16,6 +16,7 @@ public class ClientMain
 			System.out.println( "To answer with a file or text message to the server");
 			return;
 		}
+		//TODO: implement other classes
 
 		try
 		{
