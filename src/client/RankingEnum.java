@@ -2,7 +2,7 @@ package client;
 
 
 /**
- * Enum class for the ranking system
+ * Enum class for the ranking system, implemented in ScoringUtil class
  */
 public enum RankingEnum 
 {
