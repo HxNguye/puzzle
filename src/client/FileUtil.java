@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 /**
  * FileUtil class used to receive puzzles for the client (player) side from the server
  */
+@Deprecated
 public class FileUtil 
 {
 	ScoringUtil score = new ScoringUtil();
@@ -16,7 +17,7 @@ public class FileUtil
 	 * Constructor
 	 * @throws FileNotFoundException 
 	 */
-	public FileUtil(byte[] byteFile, boolean response, String message) throws FileNotFoundException
+	public FileUtil(byte[] byteFile, boolean response, int count, String message) throws FileNotFoundException
 	{
 		if (response = true)
 		{

@@ -13,7 +13,7 @@ public class ClientMain
 		if ( args.length != 1 )
 		{
 			System.out.println( "Usage: Client -s");
-			System.out.println( "To answer with a file or text message to the server");
+			System.out.println( "					To answer with a file or text message to the server");
 			return;
 		}
 		//TODO: implement other classes

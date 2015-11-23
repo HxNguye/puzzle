@@ -14,10 +14,13 @@ import java.net.Socket;
 public class Client 
 {	
 	int port_number;
+	boolean answerResponse = false;
+	String message = "Standard default message";
 	String localhost = "127.0.0.1";
 	Socket clientSocket;
 	InputStream in = null;
-	OutputStream out = null;
+//	OutputStream out = null;
+	
 	PrintWriter outToServer;
 	BufferedReader inFromServer;
 
@@ -62,11 +65,37 @@ public class Client
 		int count;
 		while ((count = in.read(bytes)) > 0)
 		{
-			out.write(bytes, 0, count);
+			if (answerResponse = true)
+			{
+				File file = new File("");
+				// convert array of bytes into a file
+				FileOutputStream fileOutputStream = new FileOutputStream(file);
+				try
+				{
+					fileOutputStream.write(bytes);
+					fileOutputStream.close();
+
+					// open the file
+					Desktop.getDesktop().open(file);
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+
+
+				score.addScore(10);
+				System.out.println(message);
+			}
+			else //response = false
+			{
+				score.subScore(5);
+				System.out.println(message);
+			}
 		}
 
 
-		out.close();
+//		out.close();
 		in.close();
 	}
 
@@ -88,7 +117,8 @@ public class Client
 			e.printStackTrace();
 		}
 	}
-
+	
+	@Deprecated
 	public void FileHelper(byte[] byteFile, boolean response, String message) throws FileNotFoundException
 	{
 		// if correct answer
