@@ -1,7 +1,10 @@
 package client;
 import java.awt.Desktop;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,6 +13,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.URI;
 
 public class Client 
 {	
@@ -28,7 +32,7 @@ public class Client
 	ScoringUtil score = new ScoringUtil();
 	RankingEnum rank;
 
-
+//TODO: implement Timer + Scoring
 	public Client(){}
 
 
@@ -59,44 +63,32 @@ public class Client
 		{
 			System.out.println("Can't get socket input stream. ");
 		}
-
-		byte[] bytes = new byte[1024];
-
-		int count;
-		while ((count = in.read(bytes)) > 0)
+		
+		String message;
+		DataInputStream uti = new DataInputStream(in);
+		for (int i = 0; i <3; i++)
 		{
-			if (answerResponse = true)
-			{
-				File file = new File("");
-				// convert array of bytes into a file
-				FileOutputStream fileOutputStream = new FileOutputStream(file);
-				try
-				{
-					fileOutputStream.write(bytes);
-					fileOutputStream.close();
-
-					// open the file
-					Desktop.getDesktop().open(file);
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace();
-				}
-
-
-				score.addScore(10);
-				System.out.println(message);
-			}
-			else //response = false
-			{
-				score.subScore(5);
-				System.out.println(message);
-			}
+			message = uti.readUTF();
+			System.out.println(message);
 		}
-
-
-//		out.close();
-		in.close();
+		BufferedReader stdinput= new BufferedReader( new InputStreamReader(System.in) );
+		message = stdinput.readLine();
+		while (true)
+		{
+		
+		
+		outToServer.println(message);
+		message = uti.readUTF();
+		try {
+			ContentHelper(message, stdinput, uti);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		message = stdinput.readLine();
+		outToServer.println(message);
+		}
+//		in.close();
 	}
 
 	public void communicate(String message) throws IOException
@@ -104,7 +96,6 @@ public class Client
 		try
 		{
 			BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-			//			String fromServer;
 			String fromClient = message;
 			fromClient = stdIn.readLine();
 			while(fromClient != null)
@@ -118,31 +109,36 @@ public class Client
 		}
 	}
 	
-	@Deprecated
-	public void FileHelper(byte[] byteFile, boolean response, String message) throws FileNotFoundException
+	public void ContentHelper(String type, BufferedReader inserver, DataInputStream uti) throws Exception
 	{
-		// if correct answer
-		if (response = true)
-		{
-			File file = new File("");
-			// convert array of bytes into a file
-			FileOutputStream fileOutputStream = new FileOutputStream(file);
-			try
+			if (type.equals("file"))
 			{
-				fileOutputStream.write(byteFile);
-				fileOutputStream.close();
+				String filename = "Puzzle." + uti.readUTF();
+				int size = (int) uti.readLong();
+				FileOutputStream file = new FileOutputStream(filename);
+				byte[] fileByte = new byte[size];
+				BufferedOutputStream bos = new BufferedOutputStream(file);
+				int bytesRead = uti.read(fileByte,0,fileByte.length);
+				int current = bytesRead;
 
-				// open the file
-				Desktop.getDesktop().open(file);
+				do {
+					bytesRead =
+							uti.read(fileByte, current, (fileByte.length-current));
+					if(bytesRead >= 0) current += bytesRead;
+				} while(current < size);
+
+				bos.write(fileByte, 0 , current);
+				bos.flush();
+				file.close();
+				Desktop.getDesktop().open(new File(filename));
 			}
-			catch (Exception e)
+			else
 			{
-				e.printStackTrace();
+				String puzzle = uti.readUTF();
+				Desktop.getDesktop().browse(new URI(puzzle));
 			}
-
 			score.addScore(1000);
-			System.out.println(message);
-		}
+//			System.out.println(message);
 	}
 }
 

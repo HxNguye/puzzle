@@ -24,7 +24,9 @@ public class ClientMain
 		}
 		catch( Exception e )
 		{
-			JOptionPane.showMessageDialog(null, "Server is not started. Can not connect!");
+			//JOptionPane.showMessageDialog(null, "Server is not started. Can not connect!");
+			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		

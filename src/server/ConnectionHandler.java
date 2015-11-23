@@ -2,6 +2,7 @@ package server;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
@@ -42,8 +43,8 @@ public class ConnectionHandler implements Runnable{
 			while(true){
 				stage = getStage(input.readLine());
 				if (stage == -1){
-					output.writeUTF("That was not a valid entry");
-					output.writeUTF("\nEnter \"new\" if you are a new player or "
+					output.writeUTF("That was not a valid entry"
+							+ "\nEnter \"new\" if you are a new player or "
 							+ "enter the answer to the last puzzle you completed:");
 
 				}
@@ -83,12 +84,15 @@ public class ConnectionHandler implements Runnable{
 		String line = input.readLine();
 		while (!line.equals("exit")){
 			//if the client send a correct answer
+			//TODO: sort out answer handler
 			if (puzzle.getAnswer(line)){
 				if (++stage == puzzles.size()){
 					output.writeUTF("You Win!");
+					System.out.println("Player won");
 					break;
 				}
 				//send a snarky message here
+				System.out.println("Player was right");
 				puzzle = puzzles.get(stage);
 				sendPuzzle(output);
 			}
@@ -96,7 +100,7 @@ public class ConnectionHandler implements Runnable{
 				output.writeUTF(puzzle.clue);
 			}
 			else{
-				//send a snarky message here
+				System.out.println("Player was wrong");
 			}
 		}
 	}
@@ -108,11 +112,14 @@ public class ConnectionHandler implements Runnable{
 		}
 		else{
 			output.writeUTF(puzzle.type);
+			output.writeUTF(puzzle.content.substring(puzzle.content.length()-3));
+			File fil = new File(puzzle.content);
+			output.writeLong(fil.length());
 			FileInputStream file = new FileInputStream(puzzle.content);
 			byte[] fileByte = new byte[1500];
-			file.read(fileByte);
-			while(fileByte != null){
-				output.write(fileByte);
+			int numread;
+			while((numread = file.read(fileByte)) != -1){
+				output.write(fileByte,0,numread);
 			}
 			file.close();
 		}
