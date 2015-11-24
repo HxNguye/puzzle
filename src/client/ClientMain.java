@@ -1,13 +1,9 @@
 package client;
 import java.net.InetAddress;
 
-import javax.swing.JOptionPane;
-
 
 public class ClientMain 
 {
-
-
 	public static void main(String[] args) throws Exception
 	{
 		Client c = new Client();
@@ -17,7 +13,6 @@ public class ClientMain
 			System.out.println( "Usage: Client <servername> <port>");
 			return;
 		}
-		//TODO: implement other classes
 
 		try
 		{
@@ -26,14 +21,9 @@ public class ClientMain
 		}
 		catch( Exception e )
 		{
-			//JOptionPane.showMessageDialog(null, "Server is not started. Can not connect!");
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
-		
-		
-		
-
 
 	}
 
