@@ -26,19 +26,12 @@ public class ClientTest {
 		ClientMain.main(args);
 	}
 	
-	@Test
-	public void connectTest() throws IOException {
-		c.connect(9000);
-		assertEquals(100,c.score.getScore());
-	}
+//	@Test
+//	public void connectTest() throws IOException {
+//		c.connect(null, 9000);
+//		assertEquals(100,c.score.getScore());
+//	}
 	
-	@Test
-	public void communicateTest() {
-		c.communicate("Test string");
-		assertNotNull(c.inFromServer);
-		c.communicate("new");
-		assertEquals(0,c.inFromServer);
-	}
 	
 	
 }

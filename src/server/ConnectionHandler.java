@@ -98,11 +98,10 @@ public class ConnectionHandler implements Runnable
 			{
 				if (++stage == puzzles.size())
 				{
-					outputHelper(4,output,"You won! snarky snark");
+					outputHelper(4,output,"Oh you actually won, here's an imaginary cake. Let's see how good you did.");
 					System.out.println("Player won");
 					break;
 				}
-				//send a snarky message here
 				System.out.println("Player was right");
 				outputHelper(3,output, "T");
 				puzzle = puzzles.get(stage);
@@ -148,12 +147,12 @@ public class ConnectionHandler implements Runnable
 	}
 	
 	public void outputHelper(int state, DataOutputStream output, String message) throws IOException
-	{
+	{ //Helps with sending message and puzzles.
 		Random rng = new Random();
 		output.writeInt(state);
 		switch (state)
 		{
-		case 1:
+		case 1: //Sends a message
 			if (message.equals("Invalid"))
 			{
 				output.writeUTF("Invalid choice: snarky snark comment");
@@ -163,10 +162,10 @@ public class ConnectionHandler implements Runnable
 				output.writeUTF(message);
 			}
 			break;
-		case 2:
+		case 2: //Sends a puzzle
 			sendPuzzle(output);
 			break;
-		case 3:
+		case 3: //Sends an answer response
 			rng.setSeed(System.currentTimeMillis());
 			if (message.equals("T"))
 			{
@@ -179,7 +178,7 @@ public class ConnectionHandler implements Runnable
 				output.writeUTF(incorrect.get(rng.nextInt(incorrect.size()-1)));
 			}
 			break;
-		case 4:
+		case 4: //End game
 			output.writeUTF(message);
 			break;
 		}

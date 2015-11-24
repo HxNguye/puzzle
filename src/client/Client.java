@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URI;
+import java.net.URISyntaxException;
 
 public class Client 
 {	
@@ -54,7 +55,7 @@ public class Client
 		tallyingScore();
 	}
 
-	public void PuzzleReceiver() throws Exception
+	public void PuzzleReceiver() throws IOException // Receive puzzle according to type
 	{
 		String type = dataInFromServer.readUTF();
 		if (type.equals("file"))
@@ -82,7 +83,16 @@ public class Client
 		else
 		{
 			String puzzle = dataInFromServer.readUTF();
-			Desktop.getDesktop().browse(new URI(puzzle));
+			try 
+			{
+				Desktop.getDesktop().browse(new URI(puzzle));
+			}
+			
+			catch (URISyntaxException e) 
+			{
+				System.out.println("Relax, this error is not your fault, go complain to our QA about this: \n\n" 
+									+ e.getMessage());
+			}
 		}
 	}
 	public void communicationHandler() throws IOException
@@ -94,28 +104,27 @@ public class Client
 		{
 			switch(state)
 			{
-			case 1:
+			case 1: //Receives a message
 				message = dataInFromServer.readUTF();
 				System.out.println(message);
 				outputHelper();
 				state = dataInFromServer.readInt();
 				break;
 
-			case 2:
+			case 2: //Receives a puzzle
 				try 
 				{
 					PuzzleReceiver();
 				} 
 				catch (Exception e) 
 				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					System.out.println("Did you break something? Oh it's just this error:\n\n" + e.getMessage());
 				}
 				outputHelper();
 				state = dataInFromServer.readInt();
 				break;
 				
-			case 3:
+			case 3: //Receives an answer response
 				Boolean answer = dataInFromServer.readBoolean();
 				if (answer)
 				{
@@ -134,7 +143,7 @@ public class Client
 				}
 				break;
 				
-			case 4:
+			case 4: //End game
 				message = dataInFromServer.readUTF();
 				System.out.println(message);
 				state = -1;
@@ -142,7 +151,7 @@ public class Client
 			}
 		}
 	}
-	public void outputHelper() throws IOException
+	public void outputHelper() throws IOException //Help with outputs to Server
 	{
 		message = stdinput.readLine();
 		if (message.contains("hint") || message.contains("clue"))
@@ -155,7 +164,7 @@ public class Client
 			outToServer.println(message);
 		}
 	}
-	public void tallyingScore()
+	public void tallyingScore() //Calculate Score and give player ranking
 	{
 		System.out.println("Your score is: " + score.getScore());
 		score.upgradeRanking();
