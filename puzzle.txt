@@ -1,2 +1,4 @@
 www.google.com,google,what's the website?,URL
 Ameca_splendens.jpg,Ameca splendens,what's the fish's name?,file
+bobross.jpg,Bob Ross,who is this person?,file
+math.jpg,8,what is the answer to this math problem?,file
