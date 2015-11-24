@@ -43,8 +43,8 @@ public class ConnectionHandler implements Runnable
 
 			// Implement some Puzzle handler here (new PuzzleHandler etc)
 			// WIP
-			textLoader(correct,"correct.txt");
-			textLoader(incorrect,"incorrect.txt");
+			textLoader(correct = new ArrayList<String>(),"correct.txt");
+			textLoader(incorrect = new ArrayList<String>(),"incorrect.txt");
 			while(true)
 			{
 				stage = getStage(input.readLine());
@@ -187,7 +187,7 @@ public class ConnectionHandler implements Runnable
 	
 	public void textLoader(ArrayList<String> list, String file) throws IOException
 	{
-		
+			
 			BufferedReader inFile= new BufferedReader(new FileReader(file));
 			String line = inFile.readLine();
 			while(line != null){
