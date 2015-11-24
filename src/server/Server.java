@@ -51,7 +51,7 @@ public class Server implements Runnable
 				}
 				throw new RuntimeException("Error accepting client connection", e);
 			}
-			new Thread(new ConnectionHandler(clientSocket, "Multithreaded Server", ++Threadcount, puzzle)).start();
+			new Thread(new ConnectionHandler(clientSocket, ++Threadcount, puzzle)).start();
 		}
 		System.out.println("Server Stopped.") ;
 	}
@@ -100,24 +100,23 @@ public class Server implements Runnable
 
 	public static void main(String[] args) throws Exception
 	{
-		Server server = new Server(9000);
+		if (args.length == 1)
+		{
+		Server server = new Server(Integer.parseInt(args[0]));
 		new Thread(server).start();
 		BufferedReader input= new BufferedReader( new InputStreamReader(System.in) );
 		String temp = input.readLine();
-		//		try 
-		//		{
-		//    	    Thread.sleep(20 * 1000);
-		//    	} 
-		//		catch (InterruptedException e) 
-		//		{
-		//    	    e.printStackTrace();
-		//    	}
 		while (!temp.equals("stop"))
 		{
 			temp = input.readLine();
 		}
 		System.out.println("Stopping Server");
 		server.stop();
+		}
+		else
+		{
+			System.out.println("Usage: Server <port>");
+		}
 
 	}
 }

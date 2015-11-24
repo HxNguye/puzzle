@@ -44,7 +44,7 @@ public class ScoringUtil
 	/**
 	 * Method to get the Player Score
 	 */
-	public int getSocre()
+	public int getScore()
 	{
 		return playerScore;
 	}
@@ -54,27 +54,27 @@ public class ScoringUtil
 	 */
 	public RankingEnum upgradeRanking()
 	{
-		if (playerScore >= 50)
+		if (playerScore >= 500)
 		{
 			setRanking(RankingEnum.S);
 		}	
-		else if(playerScore >= 40)
+		else if(playerScore >= 400)
 		{
 			setRanking(RankingEnum.A);
 		}
-		else if(playerScore >= 30)
+		else if(playerScore >= 300)
 		{
 			setRanking(RankingEnum.B);
 		}
-		else if(playerScore >= 20)
+		else if(playerScore >= 200)
 		{
 			setRanking(RankingEnum.C);
 		}
-		else if(playerScore >= 10)
+		else if(playerScore >= 100)
 		{
 			setRanking(RankingEnum.D);
 		}
-		else //(playerScore > 10)
+		else // <100
 		{
 			setRanking(RankingEnum.F);
 		}

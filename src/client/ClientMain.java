@@ -1,4 +1,6 @@
 package client;
+import java.net.InetAddress;
+
 import javax.swing.JOptionPane;
 
 
@@ -10,17 +12,17 @@ public class ClientMain
 	{
 		Client c = new Client();
 		
-		if ( args.length != 1 )
+		if ( args.length != 2 )
 		{
-			System.out.println( "Usage: Client -s");
-			System.out.println( "					To answer with a file or text message to the server");
+			System.out.println( "Usage: Client <servername> <port>");
 			return;
 		}
 		//TODO: implement other classes
 
 		try
 		{
-			c.connect(9000);
+			InetAddress server = InetAddress.getByName(args[0]);
+			c.connect(server,Integer.parseInt(args[1]));
 		}
 		catch( Exception e )
 		{
