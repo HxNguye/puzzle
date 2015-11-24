@@ -136,7 +136,7 @@ public class Client
 				{
 					System.out.println(dataInFromServer.readUTF());
 					failcount += 1;
-					if (failcount %3==0)
+					if (failcount == 3)
 					{
 						System.out.println("Ok, I'm going to throw you a bone here, try hint.");
 						
