@@ -1,5 +1,5 @@
-www.tagmatasecurity.com,Karen Heart,Our beloved owner,URL
-picture_puzzle_5.jpg,Static IP,Depaul has 60k of my brothers and sisters,file
+www.tagmatasecurity.com,karen heart,Our beloved owner,URL
+picture_puzzle_5.jpg,static ip,Depaul has 60k of my brothers and sisters,file
 picture_puzzle_1.jpg,ameca splendens,Your favorite fish ;),file
 www.beesbeesbees.com,bees,Come on really?,URL
 picture_puzzle_3.png,6,It's just missing.,file

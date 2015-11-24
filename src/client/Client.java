@@ -138,7 +138,12 @@ public class Client
 					failcount += 1;
 					if (failcount %3==0)
 					{
+						System.out.println("Ok, I'm going to throw you a bone here, try hint.");
 						
+					}
+					else if (failcount %5 == 0)
+					{
+						System.out.println("Really, try hint. Your score is suffering.");
 						score.subScore(50);
 					}
 					outputHelper();
@@ -159,6 +164,7 @@ public class Client
 		message = stdinput.readLine();
 		if (message.contains("hint") || message.contains("clue"))
 		{
+			System.out.println("Really? You really need a hint? Fine:");
 			outToServer.println("hint");
 			score.subScore(50);
 		}

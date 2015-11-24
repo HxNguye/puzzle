@@ -40,7 +40,10 @@ public class ConnectionHandler implements Runnable
 			outputHelper(1, output, "\nWelcome to Distributed System Puzzle. \n"
 					+ "The part of the class where you have to be in attendance. \n\n"
 					+ "If this is your first time, please type 'I'm a newbie'. \n"
-					+ "If this is NOT your first time, you know what to do.");
+					+ "If this is NOT your first time, you know what to do.\n\n"
+					+ "You will be given either a picture or a website. That is your clue.\n"
+					+ "Type in your answer, if you are stuck, try typing 'hint' or 'clue'.\n"
+					+ "You are scored based on your performance, so pay attention.", false);
 
 			// Implement some Puzzle handler here (new PuzzleHandler etc)
 			// WIP
@@ -52,13 +55,13 @@ public class ConnectionHandler implements Runnable
 				stage = getStage(input.readLine());
 				if (stage == -1)
 				{
-					outputHelper(1,output,"Invalid");
+					outputHelper(1,output,"Invalid", false);
 				}
 				else break;
 			}
 			puzzle = puzzles.get(stage);
 			//send initial puzzle
-			outputHelper(2,output, "");
+			outputHelper(2,output, "", false);
 			//handle the rest of the puzzles and then close the connection
 			handlePuzzles(input, output);
 
@@ -99,25 +102,25 @@ public class ConnectionHandler implements Runnable
 			{
 				if (++stage == puzzles.size())
 				{
-					outputHelper(4,output,"Oh you actually won, here's an imaginary cake. Let's see how good you did.");
-					System.out.println("Player#" + count +  " won");
+					outputHelper(4,output,"Oh you actually won, here's an imaginary cake. Let's see how good you did.", true);
+					System.out.println("Player " + count +  " won");
 					break;
 				}
-				System.out.println("Player" + count +  " was right");
-				outputHelper(3,output, "T");
+				System.out.println("Player " + count +  " was right");
+				outputHelper(3,output,"", true);
 				puzzle = puzzles.get(stage);
-				outputHelper(2,output, "");
+				outputHelper(2,output, "", false);
 			}
 			
 			else if(line.equals("hint"))
 			{
-				outputHelper(1,output, "Really? You really need a hint? Fine: \n\n" + puzzle.clue);
+				outputHelper(1,output, "\n" + puzzle.clue, false);
 			}
 			
 			else
 			{
-				System.out.println("Player" + count +  " was wrong");
-				outputHelper(3,output, "F");
+				System.out.println("Player " + count +  " was wrong");
+				outputHelper(3,output, "", false);
 			}
 			line = input.readLine();
 		}
@@ -147,7 +150,7 @@ public class ConnectionHandler implements Runnable
 		}
 	}
 	
-	public void outputHelper(int state, DataOutputStream output, String message) throws IOException
+	public void outputHelper(int state, DataOutputStream output, String message, boolean check) throws IOException
 	{ //Helps with sending message and puzzles.
 		Random rng = new Random();
 		output.writeInt(state);
@@ -170,7 +173,8 @@ public class ConnectionHandler implements Runnable
 			break;
 		case 3: //Sends an answer response
 			rng.setSeed(System.currentTimeMillis());
-			if (message.equals("T"))
+			System.out.println(message);
+			if (check)
 			{
 				output.writeBoolean(true);
 				output.writeUTF(correct.get(rng.nextInt(correct.size()-1)));
