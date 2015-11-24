@@ -1,2 +1,0 @@
-www.google.com,google,what's the website?,URL
-Ameca_splendens.jpg,Ameca splendens,what's the fish's name?,file
