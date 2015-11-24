@@ -37,12 +37,14 @@ public class ConnectionHandler implements Runnable
 		{
 			BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			DataOutputStream output = new DataOutputStream( clientSocket.getOutputStream() );
-			long time = System.currentTimeMillis();
-			outputHelper(1, output, "\nEnter \"new\" if you are a new player or "
-					+ "enter the answer to the last puzzle you completed:");
+			outputHelper(1, output, "\nWelcome to Distributed System Puzzle. \n"
+					+ "The part of the class where you have to be in attendance. \n\n"
+					+ "If this is your first time, please type 'I'm a newbie'. \n"
+					+ "If this is NOT your first time, you know what to do.");
 
 			// Implement some Puzzle handler here (new PuzzleHandler etc)
 			// WIP
+			System.out.println("Player #" + count + " connected.");
 			textLoader(correct = new ArrayList<String>(),"correct.txt");
 			textLoader(incorrect = new ArrayList<String>(),"incorrect.txt");
 			while(true)
@@ -62,18 +64,17 @@ public class ConnectionHandler implements Runnable
 
 			output.close();
 			input.close();
-			System.out.println("Request processed: " + time);
 			clientSocket.close();
 		} catch (IOException e) 
 		{
-			//report exception somewhere.
+			System.out.println("Something went wrong, you wrote this. Go check.");
 			e.printStackTrace();
 		}
 	}
 
 	public int getStage(String in)
 	{
-		if(in.equals("new"))return 0;
+		if(in.contains("newbie"))return 0;
 
 		//checks for the puzzle with the matching answer
 		else 
@@ -99,10 +100,10 @@ public class ConnectionHandler implements Runnable
 				if (++stage == puzzles.size())
 				{
 					outputHelper(4,output,"Oh you actually won, here's an imaginary cake. Let's see how good you did.");
-					System.out.println("Player won");
+					System.out.println("Player#" + count +  " won");
 					break;
 				}
-				System.out.println("Player was right");
+				System.out.println("Player" + count +  " was right");
 				outputHelper(3,output, "T");
 				puzzle = puzzles.get(stage);
 				outputHelper(2,output, "");
@@ -115,7 +116,7 @@ public class ConnectionHandler implements Runnable
 			
 			else
 			{
-				System.out.println("Player was wrong");
+				System.out.println("Player" + count +  " was wrong");
 				outputHelper(3,output, "F");
 			}
 			line = input.readLine();
@@ -150,12 +151,14 @@ public class ConnectionHandler implements Runnable
 	{ //Helps with sending message and puzzles.
 		Random rng = new Random();
 		output.writeInt(state);
+		message = "\n" + message;
 		switch (state)
 		{
 		case 1: //Sends a message
 			if (message.equals("Invalid"))
 			{
-				output.writeUTF("Invalid choice: snarky snark comment");
+				output.writeUTF("\nSurely you typed something wrong, try again.\n"
+						+ " It helps to, you know, look at the instructions?");
 			}
 			else
 			{

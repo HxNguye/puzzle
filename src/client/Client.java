@@ -137,7 +137,10 @@ public class Client
 					System.out.println(dataInFromServer.readUTF());
 					failcount += 1;
 					if (failcount %3==0)
-					score.subScore(50);
+					{
+						
+						score.subScore(50);
+					}
 					outputHelper();
 					state = dataInFromServer.readInt();
 				}

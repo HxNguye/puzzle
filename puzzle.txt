@@ -1,4 +1,8 @@
-www.google.com,google,what's the website?,URL
-Ameca_splendens.jpg,Ameca splendens,what's the fish's name?,file
-bobross.jpg,Bob Ross,who is this person?,file
-math.jpg,8,what is the answer to this math problem?,file
+www.tagmatasecurity.com,Karen Heart,Our beloved owner,URL
+picture_puzzle_5.jpg,Static IP,Depaul has 60k of my brothers and sisters,file
+picture_puzzle_1.jpg,ameca splendens,Your favorite fish ;),file
+www.beesbeesbees.com,bees,Come on really?,URL
+picture_puzzle_3.png,6,It's just missing.,file
+picture_puzzle_4.jpg,Bob Ross,who is this person?,file
+picture_puzzle_2.jpg,Google, Try Googling it,file
+www.theuselessweb.com,no,Did you find anything useful?,URL
